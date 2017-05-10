@@ -2,7 +2,10 @@ package com.merlin.core.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -178,6 +181,20 @@ public class Util {
      */
     public static boolean isSoftShowing(Activity context) {
         return context.getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED;
+    }
+
+    /**
+     * 获取主题颜色
+     *
+     * @return
+     */
+    public static int colorPrimary() {
+        TypedValue typedValue = new TypedValue();
+        AppContext.inst().app().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+        TypedArray array = AppContext.inst().app().obtainStyledAttributes(typedValue.resourceId, new int[]{android.R.attr.colorPrimary});
+        int color = array.getColor(0, Color.TRANSPARENT);
+        array.recycle();
+        return color;
     }
 
     /**
