@@ -86,6 +86,16 @@ public class Util {
     }
 
     /**
+     * get dimen from resource
+     *
+     * @param dimenId
+     * @return
+     */
+    public static float dimen(int dimenId) {
+        return AppContext.inst().app().getResources().getDimension(dimenId);
+    }
+
+    /**
      * dp2px
      *
      * @param dpValue
