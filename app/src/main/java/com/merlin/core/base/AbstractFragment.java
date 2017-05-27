@@ -1,5 +1,6 @@
 package com.merlin.core.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -41,8 +42,16 @@ public class AbstractFragment extends Fragment implements ViewInterface {
     public void initView() {
     }
 
-    public void onFragmentBackPressed() {
-        getActivity().onBackPressed();
+    public void onBackPressed() {
+        finishActivity();
+    }
+
+    protected void finishActivity() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.setResult(Activity.RESULT_OK);
+            activity.finish();
+        }
     }
 
 }
