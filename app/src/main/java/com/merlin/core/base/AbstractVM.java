@@ -7,7 +7,13 @@ package com.merlin.core.base;
 public abstract class AbstractVM implements VmInterface {
 
     public AbstractVM() {
-        initData();
+        this(true);
+    }
+
+    public AbstractVM(boolean isInit) {
+        if (isInit) {
+            initData();
+        }
     }
 
 }
