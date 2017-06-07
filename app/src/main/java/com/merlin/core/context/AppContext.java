@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.merlin.core.BuildConfig;
 import com.merlin.core.network.NetWorkListener;
 import com.merlin.core.network.NetWorkType;
 
@@ -35,6 +34,7 @@ public class AppContext {
     private Activity currentActivity;
     private NetWorkType netWorkType;
     private ArrayList<NetWorkListener> netWorkListeners = new ArrayList<>();
+    private boolean isDebug = true;
 
     /**
      * Application
@@ -68,7 +68,11 @@ public class AppContext {
      * @return
      */
     public boolean isDebug() {
-        return BuildConfig.DEBUG;
+        return isDebug;
+    }
+
+    public void setDebug(boolean debug) {
+        isDebug = debug;
     }
 
     /**
