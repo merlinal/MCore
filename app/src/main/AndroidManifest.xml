@@ -3,7 +3,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <application android:name=".context.BaseApp">
+    <application>
         <receiver android:name=".network.NetworkReceive">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
