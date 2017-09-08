@@ -1,24 +1,35 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.library'
 
-buildscript {
-    repositories {
-        jcenter()
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //dataBinding
+    dataBinding {
+        enabled = true
+    }
+    productFlavors {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+//    compile "com.android.support:appcompat-v7:$version_library"
+//    compile "com.android.support:design:$version_library"
+//    compile "com.google.code.gson:gson:$version_gson"
+    compile rootProject.ext.dependencies.appcompatV7
+    compile rootProject.ext.dependencies.design
+    compile rootProject.ext.dependencies.gson
 }
