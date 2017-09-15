@@ -6,6 +6,8 @@ package com.merlin.core.base;
 
 public interface VmInterface {
 
-    void initData();
-    
+    void start();
+
+    void stop();
+
 }
