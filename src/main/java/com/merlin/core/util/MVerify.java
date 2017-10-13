@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by ncm on 16/11/13.
  */
 
-public class ValiUtil {
+public class MVerify {
 
     /**
      * 字符串判空

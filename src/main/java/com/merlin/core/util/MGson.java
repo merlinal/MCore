@@ -13,9 +13,9 @@ import java.util.Map;
  *
  * @author zhaoanlin
  */
-public class JsonUtil {
+public class MGson {
 
-    private static final String TAG = "JsonUtil";
+    private static final String TAG = "MGson";
     private static Gson gson = new Gson();
 
     /**

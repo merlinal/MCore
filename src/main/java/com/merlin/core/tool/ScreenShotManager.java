@@ -1,4 +1,4 @@
-package com.merlin.core;
+package com.merlin.core.tool;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -14,14 +14,14 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.merlin.core.util.LogUtil;
+import com.merlin.core.util.MLog;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ScreenShotListenManager
+ * ScreenShotManager
  * <功能> 截屏监听管理器
  * <详细>
  * 截屏判断依据：监听媒体数据库的数据改变，在有数据改变时获取最后插入数据库的一条图片数据，如果符合以下规则，则认为截屏了：
@@ -34,7 +34,7 @@ import java.util.List;
  *     {@code
  *      // Requires Permission: android.permission.READ_EXTERNAL_STORAGE
  *
- *      ScreenShotListenManager manager = ScreenShotListenManager.newInstance(context);
+ *      ScreenShotManager manager = ScreenShotManager.newInstance(context);
  *
  *      manager.setListener(
  *          new OnScreenShotListener() {
@@ -50,7 +50,7 @@ import java.util.List;
  *  }
  * </pre>
  */
-public class ScreenShotListenManager {
+public class ScreenShotManager {
 
 
     // ---------- ---------- ---------- Interfaces ---------- ---------- ----------
@@ -62,7 +62,7 @@ public class ScreenShotListenManager {
 
     // ---------- ---------- ---------- Properties ---------- ---------- ----------
 
-    private static final String TAG = "ScreenShotListenManager";
+    private static final String TAG = "ScreenShotManager";
 
     /**
      * 读取媒体数据库时需要读取的列
@@ -169,7 +169,7 @@ public class ScreenShotListenManager {
             try {
                 thisContext.getContentResolver().unregisterContentObserver(thisInternalObserver);
             } catch (Exception e) {
-                LogUtil.wtf(e);
+                MLog.wtf(e);
             }
             thisInternalObserver = null;
         }
@@ -177,7 +177,7 @@ public class ScreenShotListenManager {
             try {
                 thisContext.getContentResolver().unregisterContentObserver(thisExternalObserver);
             } catch (Exception e) {
-                LogUtil.wtf(e);
+                MLog.wtf(e);
             }
             thisExternalObserver = null;
         }
@@ -191,7 +191,7 @@ public class ScreenShotListenManager {
      * 处理媒体数据库的内容改变
      */
     private void handleMediaContentChange(Uri contentUri) {
-        LogUtil.d("~~~yanss~~~ >>> ScreenShotListenManager.handleMediaContentChange() >>> handleMedia Time");
+        MLog.d("~~~yanss~~~ >>> ScreenShotManager.handleMediaContentChange() >>> handleMedia Time");
         Cursor cursor = null;
         try {
             // 数据改变时查询数据库中最后加入的一条数据
@@ -204,15 +204,15 @@ public class ScreenShotListenManager {
             );
 
             if (null == cursor) {
-                // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.handleMediaContentChange() >>> " + "Deviant logic.");
+                // LogUtils.e("~~~~~~ >>> ScreenShotManager.handleMediaContentChange() >>> " + "Deviant logic.");
                 return;
             }
             if (!cursor.moveToFirst()) {
-                // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.handleMediaContentChange() >>> " + "Cursor no data.");
+                // LogUtils.e("~~~~~~ >>> ScreenShotManager.handleMediaContentChange() >>> " + "Cursor no data.");
                 return;
             }
 
-            LogUtil.e("~~~yanss~~~ >>> ScreenShotListenManager.handleMediaContentChange() >>> handleMedia Time 2");
+            MLog.e("~~~yanss~~~ >>> ScreenShotManager.handleMediaContentChange() >>> handleMedia Time 2");
 
             // 获取各列的索引
             int dataPathIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -239,12 +239,12 @@ public class ScreenShotListenManager {
                 height = size.y;
             }
 
-            LogUtil.e("~~~yanss~~~ >>> ScreenShotListenManager.handleMediaContentChange() >>> handleMedia Time 3");
+            MLog.e("~~~yanss~~~ >>> ScreenShotManager.handleMediaContentChange() >>> handleMedia Time 3");
 
             // 处理获取到的第一行数据
             handleMediaRowData(dataPath, dateTaken, width, height);
         } catch (Exception e) {
-            LogUtil.wtf(e);
+            MLog.wtf(e);
         } finally {
             if (null != cursor && !cursor.isClosed()) {
                 cursor.close();
@@ -264,14 +264,14 @@ public class ScreenShotListenManager {
      */
     private void handleMediaRowData(String dataPath, long dateTaken, int width, int height) {
         if (checkScreenShot(dataPath, dateTaken, width, height)) {
-            // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.handleMediaRowData() >>> ScreenShot: ", "dataPath = " + dataPath + "; size = " + width + " * " + height + "; dateTaken = " + dateTaken);
+            // LogUtils.e("~~~~~~ >>> ScreenShotManager.handleMediaRowData() >>> ScreenShot: ", "dataPath = " + dataPath + "; size = " + width + " * " + height + "; dateTaken = " + dateTaken);
             if (null != thisOnScreenShotListener && !checkCallback(dataPath)) {
-                LogUtil.e("~~~yanss~~~ >>> ScreenShotListenManager.handleMediaRowData() >>> onShot Time");
+                MLog.e("~~~yanss~~~ >>> ScreenShotManager.handleMediaRowData() >>> onShot Time");
                 thisOnScreenShotListener.onShot(dataPath);
             }
         } else {
             // 如果在观察区间媒体数据库有数据改变，又不符合截屏规则，则输出到 log 待分析
-            // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.handleMediaRowData() >>> Media content changed, but not screenshot: ", "path = " + dataPath + "; size = " + width + " * " + height + "; date = " + dateTaken);
+            // LogUtils.e("~~~~~~ >>> ScreenShotManager.handleMediaRowData() >>> Media content changed, but not screenshot: ", "path = " + dataPath + "; size = " + width + " * " + height + "; date = " + dateTaken);
         }
     }
 
@@ -358,11 +358,11 @@ public class ScreenShotListenManager {
                     );
                 } catch (Exception e) {
                     screenSize.set(defaultDisplay.getWidth(), defaultDisplay.getHeight());
-                    LogUtil.wtf(e);
+                    MLog.wtf(e);
                 }
             }
         } catch (Exception e) {
-            LogUtil.wtf(e);
+            MLog.wtf(e);
         }
         return screenSize;
     }
@@ -389,7 +389,7 @@ public class ScreenShotListenManager {
 
     // ---------- ---------- ---------- Constructors ---------- ---------- ----------
 
-    private ScreenShotListenManager(Context context) {
+    private ScreenShotManager(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("The context must not be null.");
         }
@@ -399,16 +399,16 @@ public class ScreenShotListenManager {
         if (thisScreenRealSize == null) {
             thisScreenRealSize = getRealScreenSize();
             if (thisScreenRealSize != null) {
-                // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.ScreenShotListenManager() >>> ", "Screen Real Size = " + thisScreenRealSize.x + " * " + thisScreenRealSize.y);
+                // LogUtils.e("~~~~~~ >>> ScreenShotManager.ScreenShotManager() >>> ", "Screen Real Size = " + thisScreenRealSize.x + " * " + thisScreenRealSize.y);
             } else {
-                // LogUtils.e("~~~~~~ >>> ScreenShotListenManager.ScreenShotListenManager() >>> " + "Get screen real size failed.");
+                // LogUtils.e("~~~~~~ >>> ScreenShotManager.ScreenShotManager() >>> " + "Get screen real size failed.");
             }
         }
     }
 
-    public static ScreenShotListenManager newInstance(Context context) {
+    public static ScreenShotManager newInstance(Context context) {
         assertInMainThread();
-        return new ScreenShotListenManager(context);
+        return new ScreenShotManager(context);
     }
 
 
@@ -432,7 +432,7 @@ public class ScreenShotListenManager {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            LogUtil.e("~~~yanss~~~ >>> MediaContentObserver.onChange() >>> onChange Time");
+            MLog.e("~~~yanss~~~ >>> MediaContentObserver.onChange() >>> onChange Time");
             handleMediaContentChange(mContentUri);
         }
     }

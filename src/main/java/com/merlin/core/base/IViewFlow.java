@@ -4,7 +4,7 @@ package com.merlin.core.base;
  * Created by ncm on 16/11/30.
  */
 
-public interface ViewInterface {
+public interface IViewFlow {
 
     void initTool();
 

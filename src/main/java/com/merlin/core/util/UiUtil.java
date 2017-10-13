@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.merlin.core.R;
-import com.merlin.core.context.AppContext;
+import com.merlin.core.context.MContext;
 
 /**
  * Created by ncm on 16/11/7.
@@ -46,12 +46,14 @@ public class UiUtil {
         if (gravity != 0) {
             window.setGravity(gravity);  //此处可以设置dialog显示的位置
         }
-        window.setWindowAnimations(anim);  //添加动画
+        if (anim != 0) {
+            window.setWindowAnimations(anim);  //添加动画
+        }
         return dialog;
     }
 
     public static void toast(String content) {
-        Toast.makeText(AppContext.inst().app(), content, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MContext.inst().app(), content, Toast.LENGTH_SHORT).show();
     }
 
 }

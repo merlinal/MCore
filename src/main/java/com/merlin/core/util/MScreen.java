@@ -13,7 +13,7 @@ import android.view.WindowManager;
  * Created by zal on 2017/9/7.
  */
 
-public class ScreenUtil {
+public class MScreen {
 
     /**
      * 保持屏幕常亮

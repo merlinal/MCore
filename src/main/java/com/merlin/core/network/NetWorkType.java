@@ -8,29 +8,29 @@ public enum NetWorkType {
     /**
      * 没有网络
      */
-    unknown,
+    UNKNOWN,
     /**
      * 没有网络
      */
-    invalid,
+    NO,
     /**
      * wap网络
      */
-    wap,
+    WAP,
     /**
      * 2G网络
      */
-    g2,
+    G2,
     /**
      * 3G (3G和3G以上网络，或统称为快速网络)
      */
-    g3,
+    G3,
     /**
      * 4G
      */
-    g4,
+    G4,
     /**
      * wifi网络
      */
-    wifi
+    WIFI
 }

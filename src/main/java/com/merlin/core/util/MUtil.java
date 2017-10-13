@@ -2,8 +2,11 @@ package com.merlin.core.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -14,13 +17,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.merlin.core.context.AppContext;
+import com.merlin.core.context.MContext;
 
 /**
  * Created by ncm on 16/11/3.
  */
 
-public class Util {
+public class MUtil {
 
     /**
      * get view from activity
@@ -62,7 +65,7 @@ public class Util {
      * @return
      */
     public static LayoutInflater inflater() {
-        return LayoutInflater.from(AppContext.inst().app());
+        return LayoutInflater.from(MContext.inst().app());
     }
 
     /**
@@ -72,7 +75,7 @@ public class Util {
      * @return
      */
     public static String string(int stringId) {
-        return AppContext.inst().app().getString(stringId);
+        return MContext.inst().app().getString(stringId);
     }
 
     /**
@@ -82,7 +85,7 @@ public class Util {
      * @return
      */
     public static int color(int colorId) {
-        return ContextCompat.getColor(AppContext.inst().app(), colorId);
+        return ContextCompat.getColor(MContext.inst().app(), colorId);
     }
 
     /**
@@ -92,7 +95,7 @@ public class Util {
      * @return
      */
     public static float dimen(int dimenId) {
-        return AppContext.inst().app().getResources().getDimension(dimenId);
+        return MContext.inst().app().getResources().getDimension(dimenId);
     }
 
     /**
@@ -102,7 +105,7 @@ public class Util {
      * @return
      */
     public static int dp2px(float dpValue) {
-        final float scale = AppContext.inst().app().getResources().getDisplayMetrics().density;
+        final float scale = MContext.inst().app().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
@@ -113,7 +116,7 @@ public class Util {
      * @return
      */
     public static float px2dp(float pxValue) {
-        final float scale = AppContext.inst().app().getResources().getDisplayMetrics().density;
+        final float scale = MContext.inst().app().getResources().getDisplayMetrics().density;
         return (pxValue - 0.5f) / scale;
     }
 
@@ -126,9 +129,9 @@ public class Util {
      */
     public static <T extends Object> T loadClass(String classpath) {
         T t = null;
-        if (!ValiUtil.isBlank(classpath)) {
+        if (!MVerify.isBlank(classpath)) {
             try {
-                t = (T) AppContext.inst().app().getClassLoader().loadClass(classpath).newInstance();
+                t = (T) MContext.inst().app().getClassLoader().loadClass(classpath).newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -174,6 +177,19 @@ public class Util {
     }
 
     /**
+     * 隐藏软键盘
+     *
+     * @param context
+     */
+    public static void hideSoftInput(Activity context) {
+        if (null != context.getCurrentFocus() && null != context.getCurrentFocus().getWindowToken()) {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), 0);
+        }
+
+    }
+
+    /**
      * 显示软键盘
      */
     public static void showSoftInput(Activity context) {
@@ -200,11 +216,24 @@ public class Util {
      */
     public static int colorPrimary() {
         TypedValue typedValue = new TypedValue();
-        AppContext.inst().app().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
-        TypedArray array = AppContext.inst().app().obtainStyledAttributes(typedValue.resourceId, new int[]{android.R.attr.colorPrimary});
+        MContext.inst().app().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+        TypedArray array = MContext.inst().app().obtainStyledAttributes(typedValue.resourceId, new int[]{android.R.attr.colorPrimary});
         int color = array.getColor(0, Color.TRANSPARENT);
         array.recycle();
         return color;
+    }
+
+    public static String getAppName() {
+        PackageManager packageManager = null;
+        ApplicationInfo applicationInfo = null;
+        try {
+            packageManager = MContext.inst().app().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(MContext.inst().app().getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            applicationInfo = null;
+        }
+        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
+        return applicationName;
     }
 
     /**
@@ -215,11 +244,56 @@ public class Util {
      */
 //    public static Class<?> loadClass(String classpath) {
 //        try {
-//            return AppContext.inst().app().getClassLoader().loadClass(classpath);
+//            return MContext.inst().app().getClassLoader().loadClass(classpath);
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
 //        return null;
 //    }
+
+
+    /**
+     * Activity是否已销毁
+     *
+     * @param activity
+     * @return
+     */
+    public static boolean isDestroyed(Activity activity) {
+        if (activity == null) {
+            return true;
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return activity.isDestroyed();
+        } else {
+            return activity.isFinishing();
+        }
+    }
+
+    /**
+     * android.support.v4.app.Fragment 是否已销毁
+     *
+     * @param fragment
+     * @return
+     */
+    public static boolean isDestroyed(android.support.v4.app.Fragment fragment) {
+        if (isDestroyed(fragment.getActivity()) || fragment.isDetached()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * /**
+     * android.app.Fragment 是否已销毁
+     *
+     * @param fragment
+     * @return
+     */
+    public static boolean isDestroyed(android.app.Fragment fragment) {
+        if (isDestroyed(fragment.getActivity()) || fragment.isDetached()) {
+            return true;
+        }
+        return false;
+    }
 
 }

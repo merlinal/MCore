@@ -2,7 +2,7 @@ package com.merlin.core.tool;
 
 import android.view.View;
 
-import com.merlin.core.util.LogUtil;
+import com.merlin.core.util.MLog;
 
 /**
  * Created by ncm on 16/11/30.
@@ -15,7 +15,7 @@ public abstract class SafeOnClickListener implements View.OnClickListener {
         if (view != null) {
             onClickView(view);
         } else {
-            LogUtil.e("view is null");
+            MLog.e("view is null");
         }
     }
 

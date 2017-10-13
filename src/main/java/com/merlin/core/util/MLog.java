@@ -2,7 +2,8 @@ package com.merlin.core.util;
 
 import android.util.Log;
 
-import com.merlin.core.context.AppContext;
+import com.merlin.core.context.BaseApp;
+import com.merlin.core.context.MContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,52 +12,52 @@ import org.json.JSONObject;
 /**
  * Created by ncm on 16/11/7.
  */
-public class LogUtil {
+public class MLog {
 
     public static void v(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.d(generateTag(), content);
         }
     }
 
     public static void d(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.d(generateTag(), content);
         }
     }
 
     public static void i(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.i(generateTag(), content);
         }
     }
 
     public static void w(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.w(generateTag(), content);
         }
     }
 
     public static void e(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.e(generateTag(), content);
         }
     }
 
     public static void wtf(Throwable t) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.wtf(generateTag(), t);
         }
     }
 
     public static void wtf(String content) {
-        if (AppContext.inst().isDebug()) {
+        if (MContext.inst().isDebug()) {
             Log.wtf(generateTag(), content);
         }
     }
 
     public static void json(String content) {
-        if (AppContext.inst().inst().isDebug()) {
+        if (MContext.inst().inst().isDebug()) {
             printJson(generateTag(), content);
         }
     }
