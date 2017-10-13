@@ -15,7 +15,7 @@ public class SPBase {
     private SharedPreferences dataSP = null;
 
     protected SPBase(String name) {
-        this.dataSP = MContext.inst().app().getSharedPreferences(name, Context.MODE_PRIVATE);
+        this.dataSP = MContext.app().getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     public void setData(String key, Object value) {

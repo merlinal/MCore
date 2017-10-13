@@ -65,7 +65,7 @@ public class MUtil {
      * @return
      */
     public static LayoutInflater inflater() {
-        return LayoutInflater.from(MContext.inst().app());
+        return LayoutInflater.from(MContext.app());
     }
 
     /**
@@ -75,7 +75,7 @@ public class MUtil {
      * @return
      */
     public static String string(int stringId) {
-        return MContext.inst().app().getString(stringId);
+        return MContext.app().getString(stringId);
     }
 
     /**
@@ -85,7 +85,7 @@ public class MUtil {
      * @return
      */
     public static int color(int colorId) {
-        return ContextCompat.getColor(MContext.inst().app(), colorId);
+        return ContextCompat.getColor(MContext.app(), colorId);
     }
 
     /**
@@ -95,7 +95,7 @@ public class MUtil {
      * @return
      */
     public static float dimen(int dimenId) {
-        return MContext.inst().app().getResources().getDimension(dimenId);
+        return MContext.app().getResources().getDimension(dimenId);
     }
 
     /**
@@ -105,7 +105,7 @@ public class MUtil {
      * @return
      */
     public static int dp2px(float dpValue) {
-        final float scale = MContext.inst().app().getResources().getDisplayMetrics().density;
+        final float scale = MContext.app().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
@@ -116,7 +116,7 @@ public class MUtil {
      * @return
      */
     public static float px2dp(float pxValue) {
-        final float scale = MContext.inst().app().getResources().getDisplayMetrics().density;
+        final float scale = MContext.app().getResources().getDisplayMetrics().density;
         return (pxValue - 0.5f) / scale;
     }
 
@@ -131,7 +131,7 @@ public class MUtil {
         T t = null;
         if (!MVerify.isBlank(classpath)) {
             try {
-                t = (T) MContext.inst().app().getClassLoader().loadClass(classpath).newInstance();
+                t = (T) MContext.app().getClassLoader().loadClass(classpath).newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -216,8 +216,8 @@ public class MUtil {
      */
     public static int colorPrimary() {
         TypedValue typedValue = new TypedValue();
-        MContext.inst().app().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
-        TypedArray array = MContext.inst().app().obtainStyledAttributes(typedValue.resourceId, new int[]{android.R.attr.colorPrimary});
+        MContext.app().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+        TypedArray array = MContext.app().obtainStyledAttributes(typedValue.resourceId, new int[]{android.R.attr.colorPrimary});
         int color = array.getColor(0, Color.TRANSPARENT);
         array.recycle();
         return color;
@@ -227,8 +227,8 @@ public class MUtil {
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
         try {
-            packageManager = MContext.inst().app().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(MContext.inst().app().getPackageName(), 0);
+            packageManager = MContext.app().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(MContext.app().getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             applicationInfo = null;
         }
@@ -244,7 +244,7 @@ public class MUtil {
      */
 //    public static Class<?> loadClass(String classpath) {
 //        try {
-//            return MContext.inst().app().getClassLoader().loadClass(classpath);
+//            return MContext.app().getClassLoader().loadClass(classpath);
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }

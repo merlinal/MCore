@@ -42,7 +42,7 @@ public class DeviceInfo {
 
         // AppVersionName & appVersionCode
         try {
-            PackageInfo pi = MContext.inst().app().getPackageManager().getPackageInfo(MContext.inst().app().getPackageName(), 0);
+            PackageInfo pi = MContext.app().getPackageManager().getPackageInfo(MContext.app().getPackageName(), 0);
             if (!TextUtils.isEmpty(pi.versionName)) {
                 appVersion = pi.versionName;
             }
@@ -56,7 +56,7 @@ public class DeviceInfo {
 
         readPhoneState();
 
-        DisplayMetrics dm = MContext.inst().app().getResources().getDisplayMetrics();
+        DisplayMetrics dm = MContext.app().getResources().getDisplayMetrics();
         this.scale = dm.density;
         // this.scale = context.getResources().getDisplayMetrics().density;
         this.widthPixels = dm.widthPixels;
@@ -66,7 +66,7 @@ public class DeviceInfo {
         this.widthDips = (int) (this.widthPixels / this.scale + 0.5f);
         this.heightDips = (int) (this.heightPixels / this.scale + 0.5f);
 
-        this.androidId = "" + android.provider.Settings.Secure.getString(MContext.inst().app().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        this.androidId = "" + android.provider.Settings.Secure.getString(MContext.app().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
         this.uuid = new UUID(androidId.hashCode(),
                 (imei != null ? ((long) imei.hashCode() << 32) : "".hashCode()) | (simSerialNumber != null ? simSerialNumber : "").hashCode()).toString();
 
@@ -181,8 +181,8 @@ public class DeviceInfo {
     //**********手机状态**************
 
     private void readPhoneState() {
-        TelephonyManager tm = (TelephonyManager) MContext.inst().app().getSystemService(Context.TELEPHONY_SERVICE);
-        if (ContextCompat.checkSelfPermission(MContext.inst().app(), Manifest.permission.READ_PHONE_STATE)
+        TelephonyManager tm = (TelephonyManager) MContext.app().getSystemService(Context.TELEPHONY_SERVICE);
+        if (ContextCompat.checkSelfPermission(MContext.app(), Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_DENIED) {
             this.imei = tm.getDeviceId();
             if (!TextUtils.isEmpty(tm.getSubscriberId())) {
@@ -205,7 +205,7 @@ public class DeviceInfo {
     //**********网络类型**************
 
     public NetWorkType getNetWorkType() {
-        Context context = MContext.inst().app();
+        Context context = MContext.app();
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeInfo = cm.getActiveNetworkInfo();

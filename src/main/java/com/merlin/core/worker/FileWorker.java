@@ -66,7 +66,7 @@ public class FileWorker {
      * @return
      */
     public String newFolder(String folderName) {
-        return MContext.inst().app().getCacheDir() + File.separator + folderName;
+        return MContext.app().getCacheDir() + File.separator + folderName;
     }
 
     /**

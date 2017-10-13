@@ -15,49 +15,49 @@ import org.json.JSONObject;
 public class MLog {
 
     public static void v(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.d(generateTag(), content);
         }
     }
 
     public static void d(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.d(generateTag(), content);
         }
     }
 
     public static void i(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.i(generateTag(), content);
         }
     }
 
     public static void w(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.w(generateTag(), content);
         }
     }
 
     public static void e(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.e(generateTag(), content);
         }
     }
 
     public static void wtf(Throwable t) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.wtf(generateTag(), t);
         }
     }
 
     public static void wtf(String content) {
-        if (MContext.inst().isDebug()) {
+        if (MContext.isDebug()) {
             Log.wtf(generateTag(), content);
         }
     }
 
     public static void json(String content) {
-        if (MContext.inst().inst().isDebug()) {
+        if (MContext.isDebug()) {
             printJson(generateTag(), content);
         }
     }

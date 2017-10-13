@@ -2,11 +2,9 @@ package com.merlin.core.context;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.merlin.core.network.NetWorkObservable;
 import com.merlin.core.network.NetWorkObserver;
-import com.merlin.core.util.MUtil;
 
 /**
  * Created by ncm on 17/9/24.
@@ -40,9 +38,9 @@ public class MContext {
      *
      * @return
      */
-    public Application getApp() {
-        return application;
-    }
+//    public Application getApp() {
+//        return application;
+//    }
 
     public void setApp(Application application) {
         this.application = application;
@@ -53,9 +51,9 @@ public class MContext {
      *
      * @return
      */
-    public Activity getActivity() {
-        return MUtil.isDestroyed(currentActivity) ? null : currentActivity;
-    }
+//    public Activity getActivity() {
+//        return MUtil.isDestroyed(currentActivity) ? null : currentActivity;
+//    }
 
     public void setActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
@@ -66,9 +64,9 @@ public class MContext {
      *
      * @return
      */
-    public boolean isDebug() {
-        return isDebug;
-    }
+//    public boolean isDebug() {
+//        return isDebug;
+//    }
 
     public void setDebug(boolean debug) {
         isDebug = debug;
@@ -110,11 +108,15 @@ public class MContext {
     }
 
     public static Application app() {
-        return MContext.inst().getApp();
+        return MContext.inst().application;
     }
 
     public static Activity activity() {
-        return MContext.inst().getActivity();
+        return MContext.inst().currentActivity;
+    }
+
+    public static boolean isDebug() {
+        return MContext.inst().isDebug;
     }
 
 }

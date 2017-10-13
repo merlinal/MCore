@@ -10,11 +10,11 @@ import com.merlin.core.worker.sp.SPUser;
 public class SPWorker {
 
     public static SPUser user() {
-        return SPUser.getInstance();
+        return SPUser.inst();
     }
 
     public static SPApp app() {
-        return SPApp.getInstance();
+        return SPApp.inst();
     }
 
 }
