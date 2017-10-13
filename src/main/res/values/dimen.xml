@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="stroke_thin">1px</dimen>
+    <dimen name="stroke">1dp</dimen>
+
+    <dimen name="radius_small">4dp</dimen>
+    <dimen name="radius">8dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+
+    <dimen name="font_smaller">9sp</dimen>
+    <dimen name="font_small">11sp</dimen>
+    <dimen name="font_normal">13sp</dimen>
+    <dimen name="font_large">15sp</dimen>
+    <dimen name="font_larger">17sp</dimen>
+
+    <dimen name="edge_smaller">2dp</dimen>
+    <dimen name="edge_small">4dp</dimen>
+    <dimen name="edge_normal">8dp</dimen>
+    <dimen name="edge_large">12dp</dimen>
+    <dimen name="edge_larger">16dp</dimen>
+    <dimen name="edge_largest">24dp</dimen>
+
+    <dimen name="height_line_thin">1px</dimen>
+    <dimen name="height_line">1dp</dimen>
+    <dimen name="height_smaller">24dp</dimen>
+    <dimen name="height_small">32dp</dimen>
+    <dimen name="height_normal">40dp</dimen>
+    <dimen name="height_large">48dp</dimen>
+    <dimen name="height_larger">56dp</dimen>
+    <dimen name="height_largest">64dp</dimen>
+
+</resources>
