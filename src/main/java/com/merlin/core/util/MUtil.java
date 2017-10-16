@@ -2,8 +2,6 @@ package com.merlin.core.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
@@ -222,35 +220,6 @@ public class MUtil {
         array.recycle();
         return color;
     }
-
-    public static String getAppName() {
-        PackageManager packageManager = null;
-        ApplicationInfo applicationInfo = null;
-        try {
-            packageManager = MContext.app().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(MContext.app().getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            applicationInfo = null;
-        }
-        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
-        return applicationName;
-    }
-
-    /**
-     * 加载类
-     *
-     * @param classpath
-     * @return
-     */
-//    public static Class<?> loadClass(String classpath) {
-//        try {
-//            return MContext.app().getClassLoader().loadClass(classpath);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
 
     /**
      * Activity是否已销毁
