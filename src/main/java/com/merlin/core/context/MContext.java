@@ -139,6 +139,15 @@ public class MContext {
         return null;
     }
 
+    /**
+     * 获取App名称
+     *
+     * @return
+     */
+    public String getAppName() {
+        return application.getResources().getString(application.getApplicationInfo().labelRes);
+    }
+
     //*********************快捷入口*******************************
 
     public static DeviceInfo device() {
@@ -167,6 +176,10 @@ public class MContext {
 
     public static String processName() {
         return MContext.inst().getProcessName();
+    }
+
+    public static String appName() {
+        return MContext.inst().getAppName();
     }
 
 }

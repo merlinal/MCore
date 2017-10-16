@@ -76,7 +76,7 @@ public class FileWorker {
      * @return
      */
     public String newSDFolder(String folderName) {
-        return getSDPath() + File.separator + MUtil.getAppName() + File.separator + folderName;
+        return getSDPath() + File.separator + MContext.appName() + File.separator + folderName;
     }
 
     /**
