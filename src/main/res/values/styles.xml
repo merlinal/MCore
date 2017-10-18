@@ -39,10 +39,28 @@
         <item name="@android:windowExitAnimation">@anim/out_to_bottom</item>
     </style>
 
-    <!--淡入淡出-->
-    <style name="anim_alpha_scale" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/show_alpha_scale</item>
-        <item name="@android:windowExitAnimation">@anim/hide_alpha_scale</item>
+    <!--淡入淡出-中-->
+    <style name="anim_middle" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/in_from_middle</item>
+        <item name="@android:windowExitAnimation">@anim/out_to_middle</item>
+    </style>
+	
+	<!--淡入淡出-中上-->
+	<style name="anim_top_middle" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/in_from_top_middle</item>
+        <item name="@android:windowExitAnimation">@anim/out_to_top_middle</item>
+    </style>
+
+	<!--淡入淡出-左上-->
+    <style name="anim_top_left" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/in_from_top_left</item>
+        <item name="@android:windowExitAnimation">@anim/out_to_top_left</item>
+    </style>
+
+	<!--淡入淡出-右上-->
+    <style name="anim_top_right" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/in_from_top_right</item>
+        <item name="@android:windowExitAnimation">@anim/out_to_top_right</item>
     </style>
 
 </resources>
