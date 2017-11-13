@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.gson.reflect.TypeToken;
+import com.merlin.core.secure.AES;
 import com.merlin.core.util.MGson;
 import com.merlin.core.util.MLog;
 import com.merlin.core.util.MUtil;
@@ -107,7 +108,22 @@ public class UriInfo {
             if (clazz != null) {
                 it = new Intent(MContext.app(), clazz);
                 //参数
-                it.putExtras(getParams(url));
+                it.putExtras(getParams(url, null, null));
+                it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+        }
+        return it;
+    }
+
+    public Intent getIntent(String url, String password, String model) {
+        Intent it = null;
+        String classpath = getClassPath(url);
+        if (classpath != null) {
+            Class clazz = MUtil.loadClass(classpath);
+            if (clazz != null) {
+                it = new Intent(MContext.app(), clazz);
+                //参数
+                it.putExtras(getParams(url, password, model));
                 it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             }
         }
@@ -121,14 +137,16 @@ public class UriInfo {
         if (index > 0) {
             key = url.substring(0, index);
         }
-        key = key.replace(scheme, "");
         return uriActivity.get(key);
     }
 
-    private Bundle getParams(String url) {
+    private Bundle getParams(String url, String password, String model) {
         Bundle bundle = new Bundle();
         Uri uri = Uri.parse(url);
         String param = uri.getQueryParameter("param");
+        if (password != null) {
+            param = AES.decrypt(param, password, model);
+        }
         if (!MVerify.isBlank(param)) {
             try {
                 JSONObject jsonObject = new JSONObject(param);
@@ -139,16 +157,8 @@ public class UriInfo {
                 e.printStackTrace();
             }
         }
-        /*if (paramStr != null && paramStr.length() > 0) {
-            String[] params = paramStr.split("&");
-            for (String param : params) {
-                String[] nameValues = param.split("=");
-                if (nameValues.length > 1) {
-                    bundle.putString(nameValues[0], nameValues[1]);
-                }
-            }
-        }*/
         return bundle;
     }
+
 
 }

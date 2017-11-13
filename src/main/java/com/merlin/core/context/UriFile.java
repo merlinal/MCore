@@ -25,7 +25,7 @@ public class UriFile {
 
     public String getKey() {
         StringBuffer sb = new StringBuffer();
-        sb.append("scheme").append("://").append(host);
+        sb.append(scheme).append("://").append(host);
         if (!MVerify.isBlank(port)) {
             sb.append(":").append(port);
         }

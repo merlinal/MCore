@@ -153,6 +153,9 @@ public class AES {
         if (isBlank(content)) {
             return content;
         }
+        if (isBlank(mode)) {
+            mode = TRANSFORMATION;
+        }
         try {
             byte[] result = encrypt(content.getBytes(), password, mode);
             return result != null ? Hex.toHex(result) : "";
@@ -205,6 +208,9 @@ public class AES {
     public static String decrypt(String content, String password, String mode) {
         if (isBlank(content)) {
             return "";
+        }
+        if (isBlank(mode)) {
+            mode = TRANSFORMATION;
         }
         try {
             /*byte[] enc = Base64Decoder.decodeToBytes(content);*/
@@ -301,7 +307,7 @@ public class AES {
         return str == null || str.trim().length() < 1;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String content = "hi，中国人民站起来了！";
         String password = "似懂非懂是公司分管";
         //加密
@@ -315,7 +321,7 @@ public class AES {
         System.out.println("解密后2：" + decrypt(encryptResultStr2, password));
 
 //        EB9E55527FFD1334BC22F8BFBD477DCC4D85B95973A1EE916C87892E71E690832508F587505D9E800FE69C114D2A8931
-    }
+    }*/
 
 
 }
