@@ -2,6 +2,7 @@ package com.merlin.core.context;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
 
 /**
  * Created by ncm on 17/9/24.
+ * @author zal
  */
 
 public class MContext {
@@ -39,6 +41,7 @@ public class MContext {
 
     private PackageInfo packageInfo;
 
+    private UriInfo uriInfo;
 
     /**
      * Application
@@ -148,6 +151,15 @@ public class MContext {
         return application.getResources().getString(application.getApplicationInfo().labelRes);
     }
 
+    /**
+     * 自定义UriInfo信息
+     *
+     * @return
+     */
+    private UriInfo getUriInfo() {
+        return new UriInfo();
+    }
+
     //*********************快捷入口*******************************
 
     public static DeviceInfo device() {
@@ -180,6 +192,10 @@ public class MContext {
 
     public static String appName() {
         return MContext.inst().getAppName();
+    }
+
+    public static Intent getIntent(String url) {
+        return MContext.inst().getUriInfo().getIntent(url);
     }
 
 }

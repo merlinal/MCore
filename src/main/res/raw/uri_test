@@ -1,0 +1,14 @@
+[
+    {
+        "host" : "user",
+        "class" : "com.merlin.note.user.UserListActivity",
+        "param" : ["phone", "code"]
+    },
+    {
+        "host" : "user",
+        "class" : "com.merlin.note.user.UserDetailActivity",
+        "path" : "detail",
+        "port" : "8888",
+        "param" : ["phone-手机号", "code"]
+    }
+]

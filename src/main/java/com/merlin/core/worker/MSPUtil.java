@@ -7,7 +7,7 @@ import com.merlin.core.worker.sp.SPUser;
  * Created by ncm on 16/10/31.
  */
 
-public class SPWorker {
+public class MSPUtil {
 
     public static SPUser user() {
         return SPUser.inst();

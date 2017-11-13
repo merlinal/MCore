@@ -4,7 +4,7 @@ package com.merlin.core;
  * Created by ncm on 16/11/30.
  */
 
-public class Constant {
+public class MConstant {
 
     public final static String PARAM_KEY_1 = "key1";
     public final static String PARAM_KEY_2 = "key2";
@@ -23,8 +23,18 @@ public class Constant {
 
     public final static String UNDER_LINE = "_";
 
-    public final static String FOLDER_NEWCHAMA = "newchama";
-    public final static String FOLDER_IMAGE = "image";  //拍照图片存放文件夹
-    public final static String FOLDER_FILE = "file";  //文件存放文件夹
+    public final static String FOLDER_MERLIN = "merlin";
+    /**
+     * 拍照图片存放文件夹
+     */
+    public final static String FOLDER_IMAGE = "image";
+    /**
+     * 文件存放文件夹
+     */
+    public final static String FOLDER_FILE = "file";
+    /**
+     * 缓存
+     */
+    public final static String FOLDER_CACHE = "cache";
 
 }
