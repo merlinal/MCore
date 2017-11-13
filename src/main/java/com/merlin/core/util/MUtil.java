@@ -119,13 +119,13 @@ public class MUtil {
     }
 
     /**
-     * 加载类
+     * 加载类实例
      *
      * @param classpath
      * @param <T>
      * @return
      */
-    public static <T extends Object> T loadClass(String classpath) {
+    public static <T extends Object> T loadInstance(String classpath) {
         T t = null;
         if (!MVerify.isBlank(classpath)) {
             try {
@@ -141,6 +141,23 @@ public class MUtil {
             }
         }
         return t;
+    }
+
+    /**
+     * 加载类
+     *
+     * @param classpath
+     * @return
+     */
+    public static Class<?> loadClass(String classpath) {
+        if (!MVerify.isBlank(classpath)) {
+            try {
+                return MContext.app().getClassLoader().loadClass(classpath);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     /**
