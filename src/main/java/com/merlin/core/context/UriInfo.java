@@ -149,7 +149,8 @@ public class UriInfo {
             try {
                 JSONObject jsonObject = new JSONObject(param);
                 for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
-                    bundle.putString(it.next(), jsonObject.getString(it.next()));
+                    String key = it.next();
+                    bundle.putString(key, jsonObject.getString(key));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
