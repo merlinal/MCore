@@ -36,7 +36,7 @@ public class UriInfo {
         init();
     }
 
-    private String scheme = "merlin://";
+    private String scheme = "merlin";
 
     private Map<String, String> uriActivity = new HashMap<>();
 
@@ -89,7 +89,7 @@ public class UriInfo {
         }
     }
 
-    public InputStreamReader getStreamReader(InputStream ins) {
+    private InputStreamReader getStreamReader(InputStream ins) {
         if (ins != null) {
             try {
                 return new InputStreamReader(ins, "UTF-8");
@@ -109,7 +109,6 @@ public class UriInfo {
                 it = new Intent(MContext.app(), clazz);
                 //参数
                 it.putExtras(getParams(url, null, null));
-                it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             }
         }
         return it;
@@ -124,7 +123,6 @@ public class UriInfo {
                 it = new Intent(MContext.app(), clazz);
                 //参数
                 it.putExtras(getParams(url, password, model));
-                it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             }
         }
         return it;
