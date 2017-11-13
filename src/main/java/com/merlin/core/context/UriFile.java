@@ -18,10 +18,10 @@ public class UriFile {
     /**
      * 必传
      */
-    public String clazz;
+    public String target;
     public String port;
     public String path;
-    public String param;
+    public String[] param;
 
     public String getKey() {
         StringBuffer sb = new StringBuffer();
@@ -40,12 +40,12 @@ public class UriFile {
     [
         {
             "host" : "user",
-            "class" : "com.merlin.note.user.UserListActivity",
+            "target" : "com.merlin.note.user.UserListActivity",
             "param" : ["phone", "code"]
         },
         {
             "host" : "user",
-            "class" : "com.merlin.note.user.UserDetailActivity",
+            "target" : "com.merlin.note.user.UserDetailActivity",
             "path" : "detail",
             "port" : "8888",
             "param" : ["phone-手机号", "code"]

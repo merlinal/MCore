@@ -64,7 +64,7 @@ public class UriInfo {
                                     sb.append(str);
                                 }
                                 MLog.i(sb.toString());
-                                uriList = MGson.toList(sb.toString(), new TypeToken<List<UriFile>>() {
+                                uriList = MGson.toObject(sb.toString(), new TypeToken<List<UriFile>>() {
                                 }.getType());
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -74,7 +74,7 @@ public class UriInfo {
                                     if (MVerify.isBlank(uri.scheme)) {
                                         uri.scheme = scheme;
                                     }
-                                    uriActivity.put(uri.getKey(), uri.clazz);
+                                    uriActivity.put(uri.getKey(), uri.target);
                                 }
                             }
                         }

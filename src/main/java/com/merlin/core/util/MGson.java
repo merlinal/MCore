@@ -62,7 +62,7 @@ public class MGson {
         try {
             map = gson.fromJson(jsonString, type);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return map;
     }
@@ -81,6 +81,7 @@ public class MGson {
         try {
             map = getComplexGson().fromJson(jsonString, type);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return map;
     }
@@ -97,6 +98,7 @@ public class MGson {
         try {
             list = gson.fromJson(jsonString, type);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
@@ -119,6 +121,24 @@ public class MGson {
     }
 
     /**
+     * jsonToObject
+     *
+     * @param jsonString
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T toObject(String jsonString, Class<T> clazz) {
+        T t = null;
+        try {
+            t = gson.fromJson(jsonString, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return t;
+    }
+
+    /**
      * jsonToArray
      *
      * @param jsonString
@@ -131,6 +151,7 @@ public class MGson {
             Gson gson = new Gson();
             ts = gson.fromJson(jsonString, type);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return ts;
     }
@@ -141,7 +162,7 @@ public class MGson {
      * @param params
      * @return
      */
-    private static Gson getComplexGson(String... params) {
+    public static Gson getComplexGson(String... params) {
         String dateFormat = "yyyy-MM-dd HH:mm:ss:SSS";
         double version = 1.0d;
         if (params != null && params.length > 0) {
@@ -159,6 +180,15 @@ public class MGson {
                 //@Since(版本号)能完美地实现这个功能.还的字段可能,随着版本的升级而删除,那么
                 //@Until(版本号)也能实现这个功能,GsonBuilder.setVersion(double)方法需要调用.
                 .create();
+    }
+
+    /**
+     * Gson
+     *
+     * @return
+     */
+    public static Gson getGson() {
+        return gson;
     }
 
 
