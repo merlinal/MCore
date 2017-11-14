@@ -100,20 +100,6 @@ public class UriInfo {
         return null;
     }
 
-    public Intent getIntent(String url) {
-        Intent it = null;
-        String classpath = getClassPath(url);
-        if (classpath != null) {
-            Class clazz = MUtil.loadClass(classpath);
-            if (clazz != null) {
-                it = new Intent(MContext.app(), clazz);
-                //参数
-                it.putExtras(getParams(url, null, null));
-            }
-        }
-        return it;
-    }
-
     public Intent getIntent(String url, String password, String model) {
         Intent it = null;
         String classpath = getClassPath(url);
@@ -143,7 +129,11 @@ public class UriInfo {
         Uri uri = Uri.parse(url);
         String param = uri.getQueryParameter("param");
         if (password != null) {
-            param = AES.decrypt(param, password, model);
+            if (model != null) {
+                param = AES.decrypt(param, password, model);
+            } else {
+                param = AES.decrypt(param, password);
+            }
         }
         if (!MVerify.isBlank(param)) {
             try {

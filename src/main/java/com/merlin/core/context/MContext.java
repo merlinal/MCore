@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 /**
  * Created by ncm on 17/9/24.
+ *
  * @author zal
  */
 
@@ -195,7 +196,15 @@ public class MContext {
     }
 
     public static Intent getIntent(String url) {
-        return MContext.inst().getUriInfo().getIntent(url);
+        return MContext.inst().getUriInfo().getIntent(url, null, null);
+    }
+
+    public static Intent getIntent(String url, String password) {
+        return MContext.inst().getUriInfo().getIntent(url, password, null);
+    }
+
+    public static Intent getIntent(String url, String password, String model) {
+        return MContext.inst().getUriInfo().getIntent(url, password, model);
     }
 
 }
