@@ -22,8 +22,24 @@ import javax.crypto.spec.SecretKeySpec;
  * AES 加密 & 解密
  */
 public class AES {
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
+
     private static final String ALGORITHM = "AES";
+
+    public static final String TRANSFORMATION_CBC_NO = "AES/CBC/NoPadding";
+    public static final String TRANSFORMATION_CBC_PKCS5 = "AES/CBC/PKCS5Padding";
+    public static final String TRANSFORMATION_CBC_ISO10126 = "AES/CBC/ISO10126Padding";
+    public static final String TRANSFORMATION_CFB_NO = "AES/CFB/NoPadding";
+    public static final String TRANSFORMATION_CFB_PKCS5 = "AES/CFB/PKCS5Padding";
+    public static final String TRANSFORMATION_CFB_ISO10126 = "AES/CFB/ISO10126Padding";
+    public static final String TRANSFORMATION_EBC_NO = "AES/ECB/NoPadding";
+    public static final String TRANSFORMATION_EBC_PKCS5 = "AES/ECB/PKCS5Padding";
+    public static final String TRANSFORMATION_EBC_ISO10126 = "AES/ECB/ISO10126Paddingg";
+    public static final String TRANSFORMATION_OFB_NO = "AES/OFB/NoPadding";
+    public static final String TRANSFORMATION_OFB_PKCS5 = "AES/OFB/PKCS5Padding";
+    public static final String TRANSFORMATION_OFB_ISO10126 = "AES/OFB/ISO10126Padding";
+    public static final String TRANSFORMATION_PCBC_NO = "AES/PCBC/NoPadding";
+    public static final String TRANSFORMATION_PCBC_PKCS5 = "AES/PCBC/PKCS5Padding";
+    public static final String TRANSFORMATION_PCBC_ISO10126 = "AES/PCBC/ISO10126Padding";
 
     /* 加密模式和填充方式
      加密方式/工作模式/填充模式       16字节加密后数据长度        不满16字节加密后长度
@@ -154,7 +170,7 @@ public class AES {
             return content;
         }
         if (isBlank(mode)) {
-            mode = TRANSFORMATION;
+            mode = TRANSFORMATION_CBC_PKCS5;
         }
         try {
             byte[] result = encrypt(content.getBytes(), password, mode);
@@ -210,7 +226,7 @@ public class AES {
             return "";
         }
         if (isBlank(mode)) {
-            mode = TRANSFORMATION;
+            mode = TRANSFORMATION_CBC_PKCS5;
         }
         try {
             /*byte[] enc = Base64Decoder.decodeToBytes(content);*/
