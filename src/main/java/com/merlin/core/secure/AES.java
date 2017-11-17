@@ -7,6 +7,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Provider;
 import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
@@ -71,44 +72,7 @@ public class AES {
         否则会会抛异常javax.crypto.IllegalBlockSizeException: Input length must be multiple of 16 when decrypting with padded cipher
         需通过byte2Hex(byte[] bytes)来转换
         */
-        return Hex.toHex(encryptToBytes(content, password));
-    }
-
-    /**
-     * 加密
-     *
-     * @param content
-     * @param password
-     * @return
-     */
-    private static byte[] encryptToBytes(String content, String password) {
-        try {
-            KeyGenerator gen = KeyGenerator.getInstance(ALGORITHM);
-            gen.init(128, new SecureRandom(password.getBytes()));
-            SecretKey secretKey = gen.generateKey();
-            byte[] encodeFormat = secretKey.getEncoded();
-            SecretKeySpec key = new SecretKeySpec(encodeFormat, ALGORITHM);
-            // 创建密码器
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            byte[] byteContent = content.getBytes("utf-8");
-            // 初始化
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            // 加密
-            return cipher.doFinal(byteContent);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return encrypt(content, password, ALGORITHM);
     }
 
     /**
@@ -119,42 +83,7 @@ public class AES {
      * @return
      */
     public static String decrypt(String content, String password) {
-        byte[] bytes = decrypt(Hex.toByte(content), password);
-        return bytes != null ? new String(bytes) : null;
-    }
-
-    /**
-     * 解密
-     *
-     * @param content
-     * @param password
-     * @return
-     */
-    private static byte[] decrypt(byte[] content, String password) {
-        try {
-            KeyGenerator gen = KeyGenerator.getInstance(ALGORITHM);
-            gen.init(128, new SecureRandom(password.getBytes()));
-            SecretKey secretKey = gen.generateKey();
-            byte[] encodeFormat = secretKey.getEncoded();
-            SecretKeySpec key = new SecretKeySpec(encodeFormat, ALGORITHM);
-            // 创建密码器
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            // 初始化
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            // 加密
-            return cipher.doFinal(content);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return decrypt(content, password, ALGORITHM);
     }
 
     /**
@@ -173,7 +102,7 @@ public class AES {
             mode = TRANSFORMATION_CBC_PKCS5;
         }
         try {
-            byte[] result = encrypt(content.getBytes(), password, mode);
+            byte[] result = encrypt(content.getBytes(), getRawKey(password.getBytes()), mode);
             return result != null ? Hex.toHex(result) : "";
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,14 +114,13 @@ public class AES {
      * 加密
      *
      * @param content
-     * @param password
+     * @param key
      * @param mode
      * @return
      */
-    private static byte[] encrypt(byte[] content, String password, String mode) {
+    private static byte[] encrypt(byte[] content, byte[] key, String mode) {
         try {
-            byte[] raw = getRawKey(password.getBytes());
-            SecretKeySpec keySpec = new SecretKeySpec(raw, ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(key, ALGORITHM);
             Cipher cipher = Cipher.getInstance(mode);
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             return cipher.doFinal(content);
@@ -230,7 +158,7 @@ public class AES {
         }
         try {
             /*byte[] enc = Base64Decoder.decodeToBytes(content);*/
-            byte[] result = decrypt(Hex.toByte(content), password, mode);
+            byte[] result = decrypt(Hex.toByte(content), getRawKey(password.getBytes()), mode);
             return result != null ? new String(result) : "";
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,14 +171,13 @@ public class AES {
      * 解密
      *
      * @param content
-     * @param password
+     * @param key
      * @param mode
      * @return
      */
-    private static byte[] decrypt(byte[] content, String password, String mode) {
+    private static byte[] decrypt(byte[] content, byte[] key, String mode) {
         try {
-            byte[] raw = getRawKey(password.getBytes());
-            SecretKeySpec keySpec = new SecretKeySpec(raw, ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(key, ALGORITHM);
             Cipher cipher = Cipher.getInstance(mode);
             cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(new byte[cipher.getBlockSize()]));
             return cipher.doFinal(content);
@@ -298,7 +225,8 @@ public class AES {
             SecureRandom sr = null;
             // 在4.2以上版本中，SecureRandom获取方式发生了改变
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                sr = SecureRandom.getInstance(SHA1PRNG, "Crypto");
+                //android 去掉了sr = SecureRandom.getInstance(SHA1PRNG,"Crypto"); 需使用以下替代
+                sr = SecureRandom.getInstance(SHA1PRNG, new CryptoProvider());
             } else {
                 sr = SecureRandom.getInstance(SHA1PRNG);
             }
@@ -313,8 +241,6 @@ public class AES {
             return raw;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -323,17 +249,30 @@ public class AES {
         return str == null || str.trim().length() < 1;
     }
 
+    private static class CryptoProvider extends Provider {
+        /**
+         * Creates a Provider and puts parameters
+         */
+        public CryptoProvider() {
+            super("Crypto", 1.0, "HARMONY (SHA1 digest; SecureRandom; SHA1withDSA signature)");
+            put("SecureRandom.SHA1PRNG", "org.apache.harmony.security.provider.crypto.SHA1PRNG_SecureRandomImpl");
+            put("SecureRandom.SHA1PRNG ImplementedIn", "Software");
+        }
+
+
+    }
+
     /*public static void main(String[] args) {
         String content = "hi，中国人民站起来了！";
         String password = "似懂非懂是公司分管";
         //加密
         System.out.println("加密前：" + content);
-        String encryptResultStr1 = encrypt(content, password, TRANSFORMATION);
+        String encryptResultStr1 = encrypt(content, password, TRANSFORMATION_CBC_PKCS5);
         String encryptResultStr2 = encrypt(content, password);
         System.out.println("加密后1：" + encryptResultStr1);
         System.out.println("加密后2：" + encryptResultStr2);
         //解密
-        System.out.println("解密后1：" + decrypt(encryptResultStr1, password, TRANSFORMATION));
+        System.out.println("解密后1：" + decrypt(encryptResultStr1, password, TRANSFORMATION_CBC_PKCS5));
         System.out.println("解密后2：" + decrypt(encryptResultStr2, password));
 
 //        EB9E55527FFD1334BC22F8BFBD477DCC4D85B95973A1EE916C87892E71E690832508F587505D9E800FE69C114D2A8931

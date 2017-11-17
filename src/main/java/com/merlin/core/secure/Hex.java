@@ -61,9 +61,7 @@ public class Hex {
         }
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < hex.length() / 2; i++) {
-            int high = Integer.parseInt(hex.substring(i * 2, i * 2 + 1), 16);
-            int low = Integer.parseInt(hex.substring(i * 2 + 1, i * 2 + 2), 16);
-            bytes[i] = (byte) (high * 16 + low);
+            bytes[i] = Integer.valueOf(hex.substring(2 * i, 2 * i + 2), 16).byteValue();
         }
         return bytes;
     }
