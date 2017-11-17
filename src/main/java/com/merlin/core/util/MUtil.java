@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
@@ -84,6 +85,16 @@ public class MUtil {
      */
     public static int color(int colorId) {
         return ContextCompat.getColor(MContext.app(), colorId);
+    }
+
+    /**
+     * get Drawable from resource
+     *
+     * @param drawableId
+     * @return
+     */
+    public static Drawable drawable(int drawableId) {
+        return ContextCompat.getDrawable(MContext.app(), drawableId);
     }
 
     /**

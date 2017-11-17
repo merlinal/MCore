@@ -1,4 +1,4 @@
-package com.merlin.core.at;
+package com.merlin.core.symbol;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
