@@ -20,7 +20,7 @@ import com.merlin.core.network.NetWorkType;
 import java.util.UUID;
 
 /**
- * Created by ncm on 2017/5/5.
+ * @author merlin
  */
 
 public class DeviceInfo {

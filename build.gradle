@@ -6,6 +6,7 @@ group = 'com.github.merlinal'
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -19,6 +20,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
+        google()
     }
 }
 
@@ -48,6 +50,6 @@ dependencies {
 //    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
 
-//    provided 'com.android.support:appcompat-v7:27.0.2'
+    provided 'com.android.support:appcompat-v7:27.0.2'
     provided 'com.google.code.gson:gson:2.8.2'
 }
