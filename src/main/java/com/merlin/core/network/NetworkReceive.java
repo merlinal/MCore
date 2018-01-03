@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.merlin.core.context.MContext;
 
 /**
- * Created by ncm on 2017/5/4.
+ * @author merlin
  */
 
 public class NetworkReceive extends BroadcastReceiver {

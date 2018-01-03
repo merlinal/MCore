@@ -1,4 +1,4 @@
-package com.merlin.core.worker;
+package com.merlin.core.util;
 
 import com.merlin.core.worker.sp.SPApp;
 import com.merlin.core.worker.sp.SPUser;
