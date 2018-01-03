@@ -49,9 +49,6 @@ public class MContext {
      *
      * @return
      */
-//    public Application getApp() {
-//        return application;
-//    }
     public void setApp(Application application) {
         this.application = application;
     }
@@ -61,9 +58,6 @@ public class MContext {
      *
      * @return
      */
-//    public Activity getActivity() {
-//        return MUtil.isDestroyed(currentActivity) ? null : currentActivity;
-//    }
     public void setActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
     }
@@ -73,9 +67,6 @@ public class MContext {
      *
      * @return
      */
-//    public boolean isDebug() {
-//        return isDebug;
-//    }
     public void setDebug(boolean debug) {
         isDebug = debug;
     }
