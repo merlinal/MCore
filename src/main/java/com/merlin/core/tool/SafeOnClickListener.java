@@ -12,7 +12,7 @@ public abstract class SafeOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view != null) {
+        if (view != null && isCanClick()) {
             onClickView(view);
         } else {
             MLog.e("view is null");
@@ -20,5 +20,9 @@ public abstract class SafeOnClickListener implements View.OnClickListener {
     }
 
     protected abstract void onClickView(View view);
+
+    protected boolean isCanClick() {
+        return true;
+    }
 
 }

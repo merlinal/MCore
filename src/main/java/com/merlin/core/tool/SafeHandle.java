@@ -5,22 +5,30 @@ import android.os.Message;
 
 import com.merlin.core.util.MLog;
 
+import java.lang.ref.WeakReference;
+
 /**
- * Created by ncm on 16/11/30.
+ * @author merlin
  */
 
-public abstract class SafeHandle extends Handler {
+public abstract class SafeHandle<T> extends Handler {
+
+    private final WeakReference<T> weakReference;
+
+    public SafeHandle(T t) {
+        weakReference = new WeakReference<>(t);
+    }
 
     @Override
     public void handleMessage(Message msg) {
-        if (isCanHandle()) {
-            safeHandleMessage(msg);
+        if (weakReference.get() != null && isCanHandle()) {
+            onHandleMessage(msg);
         } else {
             MLog.e("activity is not finished or others, so can not handle message");
         }
     }
 
-    protected abstract void safeHandleMessage(Message msg);
+    protected abstract void onHandleMessage(Message msg);
 
     private boolean isCanHandle() {
         return true;
