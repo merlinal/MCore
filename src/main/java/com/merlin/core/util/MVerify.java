@@ -52,12 +52,21 @@ public class MVerify {
     }
 
     /**
-     *
      * @param o
      * @return
      */
-    public static boolean isNull(Object o){
+    public static boolean isNull(Object o) {
         return o == null;
+    }
+
+    /**
+     * 数组判空
+     *
+     * @param array
+     * @return
+     */
+    public static <T> boolean isEmpty(T[] array) {
+        return array == null || array.length < 1;
     }
 
 }
