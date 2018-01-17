@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference;
  * @author merlin
  */
 
-public abstract class SafeHandle<T> extends Handler implements IHandler {
+public class SafeHandle<T> extends Handler {
 
     private final WeakReference<T> weakReference;
     private IHandler iHandler;
@@ -24,7 +24,7 @@ public abstract class SafeHandle<T> extends Handler implements IHandler {
     @Override
     public void handleMessage(Message msg) {
         if (weakReference.get() != null && isCanHandle()) {
-            onHandleMessage(msg);
+            iHandler.onHandleMessage(msg);
         } else {
             MLog.e("activity is not finished or others, so can not handle message");
         }

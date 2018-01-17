@@ -5,10 +5,10 @@ import android.view.View;
 import com.merlin.core.util.MLog;
 
 /**
- * Created by ncm on 16/11/30.
+ * @author merlin
  */
 
-public abstract class SafeOnClickListener implements View.OnClickListener, IClick {
+public abstract class SafeOnClickListener implements View.OnClickListener {
 
     private IClick iClick;
 
@@ -19,7 +19,7 @@ public abstract class SafeOnClickListener implements View.OnClickListener, IClic
     @Override
     public void onClick(View view) {
         if (view != null && isCanClick()) {
-            onClickView(view);
+            iClick.onClickView(view);
         } else {
             MLog.e("view is null");
         }
