@@ -11,12 +11,14 @@ import java.lang.ref.WeakReference;
  * @author merlin
  */
 
-public abstract class SafeHandle<T> extends Handler {
+public abstract class SafeHandle<T> extends Handler implements IHandler {
 
     private final WeakReference<T> weakReference;
+    private IHandler iHandler;
 
-    public SafeHandle(T t) {
+    public SafeHandle(T t, IHandler iHandler) {
         weakReference = new WeakReference<>(t);
+        this.iHandler = iHandler;
     }
 
     @Override
@@ -27,8 +29,6 @@ public abstract class SafeHandle<T> extends Handler {
             MLog.e("activity is not finished or others, so can not handle message");
         }
     }
-
-    protected abstract void onHandleMessage(Message msg);
 
     private boolean isCanHandle() {
         return true;

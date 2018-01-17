@@ -8,7 +8,13 @@ import com.merlin.core.util.MLog;
  * Created by ncm on 16/11/30.
  */
 
-public abstract class SafeOnClickListener implements View.OnClickListener {
+public abstract class SafeOnClickListener implements View.OnClickListener, IClick {
+
+    private IClick iClick;
+
+    public SafeOnClickListener(IClick iClick) {
+        this.iClick = iClick;
+    }
 
     @Override
     public void onClick(View view) {
@@ -18,8 +24,6 @@ public abstract class SafeOnClickListener implements View.OnClickListener {
             MLog.e("view is null");
         }
     }
-
-    protected abstract void onClickView(View view);
 
     protected boolean isCanClick() {
         return true;
