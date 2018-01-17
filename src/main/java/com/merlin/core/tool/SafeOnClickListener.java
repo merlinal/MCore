@@ -8,7 +8,7 @@ import com.merlin.core.util.MLog;
  * @author merlin
  */
 
-public abstract class SafeOnClickListener implements View.OnClickListener {
+public class SafeOnClickListener implements View.OnClickListener {
 
     private IClick iClick;
 
