@@ -6,8 +6,6 @@ package com.merlin.core.base;
 
 public interface IViewModel {
 
-    void start();
-
     void stop();
 
 }
