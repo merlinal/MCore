@@ -331,4 +331,22 @@ public class MUtil {
         return result;
     }
 
+    /**
+     * 避免多次点击造成事件多次执行
+     *
+     * @param view View
+     */
+    public static void avoidDoubleClick(final View view) {
+        if (view == null) {
+            return;
+        }
+        view.setEnabled(false);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setEnabled(true);
+            }
+        }, 1000);
+    }
+
 }
