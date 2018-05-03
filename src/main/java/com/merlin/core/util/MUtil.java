@@ -198,7 +198,7 @@ public class MUtil {
      * @param v
      */
     public static void hideSoftInput(Activity context, View v) {
-        if (v != null && v.getWindowToken() != null && context != null && isSoftShowing(context)) {
+        if (v != null && v.getWindowToken() != null && context != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
@@ -221,7 +221,7 @@ public class MUtil {
      * 显示软键盘
      */
     public static void showSoftInput(Activity context) {
-        if (context != null && !isSoftShowing(context)) {
+        if (context != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
@@ -229,6 +229,7 @@ public class MUtil {
 
     /**
      * 键盘是否已显示
+     * 未设置状态时候可判断，若在AndroidManifest设置键盘状态，该方法不可靠
      *
      * @param context
      * @return
