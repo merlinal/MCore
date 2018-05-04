@@ -2,9 +2,11 @@ package com.merlin.core.context;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import com.merlin.core.network.NetWorkObservable;
 import com.merlin.core.network.NetWorkObserver;
@@ -196,6 +198,24 @@ public class MContext {
 
     public static Intent getIntent(String url, String password, String model) {
         return MContext.inst().getUriInfo().getIntent(url, password, model);
+    }
+
+    public static void start(Activity context, String url, int requestCode, Bundle bundle) {
+        Intent it = MContext.inst().getUriInfo().getIntent(url, null, null);
+        it.putExtras(bundle);
+        context.startActivityForResult(it, requestCode);
+    }
+
+    public static void start(Fragment context, String url, int requestCode, Bundle bundle) {
+        Intent it = MContext.inst().getUriInfo().getIntent(url, null, null);
+        it.putExtras(bundle);
+        context.startActivityForResult(it, requestCode);
+    }
+
+    public static void start(android.support.v4.app.Fragment context, String url, int requestCode, Bundle bundle) {
+        Intent it = MContext.inst().getUriInfo().getIntent(url, null, null);
+        it.putExtras(bundle);
+        context.startActivityForResult(it, requestCode);
     }
 
 }
